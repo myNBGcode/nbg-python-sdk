@@ -1,6 +1,22 @@
 # NBG Python SDK
 
-## Accounts Information PSD2 API
+Python wrapper with unified developer experience for the APIs of the National Bank of Greece.
+
+## Requirements
+
+- Python 3.6 or newer
+
+## Installation
+
+```shell
+pipenv install nbg
+```
+
+## API clients
+
+The National Bank of Greece provides a set of multiple APIs. To use each one of these APIs, you should pick the corresponding client from the `nbg` package.
+
+### Accounts Information PSD2 API
 
 ```python
 from datetime import datetime
@@ -8,66 +24,65 @@ from datetime import datetime
 import nbg
 
 
-# General client set up
-nbg_client = nbg.Client(
+# Step 1 - Set up client and authentication
+client = nbg.AccountInformationPSD2Client(
     client_id="your_client_id",
     client_secret="your_client_secret",
     production=False,
 )
-nbg_client.set_access_token("access_token_of_your_user")  # Also sets default `user_id`
+client.set_access_token("access_token_of_your_user")  # Also sets default `user_id`
 
-# Accounts Information PSD2 client and sandboxsetup
-ai_psd2_client = nbg_client.accounts_information_psd2
-ai_psd2_client.create_sandbox("sandbox_id")
-ai_psd2_client.set_default_sandbox("sandbox_id")
-ai_psd2_client.set_consent_id("consent_id")
+# Step 2 - Set up a sandbox, when in development
+client.create_sandbox("sandbox_id")
+client.set_default_sandbox("sandbox_id")
+client.set_consent_id("consent_id")
 
-# Interaction with API
+# Step 3 - Start working with the Account information API
 
-# Account
-ai_psd2_client.accounts()
-ai_psd2_client.account_beneficiaries(iban="GR7701100800000008000133077")
-ai_psd2_client.account_details(account="08000133077")
-ai_psd2_client.account_transactions(
+## Account resource
+client.accounts()
+client.account_beneficiaries(iban="GR7701100800000008000133077")
+client.account_details(account="08000133077")
+client.account_transactions(
     account="08000133077",
     date_from=datetime(2019, 7, 1),
     date_to=datetime(2019, 8, 1),
 )
 
-# Foreign Currency Account
-ai_psd2_client.foreign_currency_accounts()
-ai_psd2_client.foreign_currency_account_beneficiaries(
+## Foreign Currency Account resource
+client.foreign_currency_accounts()
+client.foreign_currency_account_beneficiaries(
     account="08000133077",
 )
-ai_psd2_client.foreign_currency_account_details(
+client.foreign_currency_account_details(
     account="08000133077",
 )
-ai_psd2_client.foreign_currency_account_transactions(
-    account="08000133077",
-    date_from=datetime(2019, 7, 1),
-    date_to=datetime(2019, 8, 1),
-)
-
-# Scheduled Payments
-ai_psd2_client.scheduled_payments(
+client.foreign_currency_account_transactions(
     account="08000133077",
     date_from=datetime(2019, 7, 1),
     date_to=datetime(2019, 8, 1),
 )
 
-# Standing Orders
-ai_psd2_client.standing_orders(
+## Scheduled Payments resource
+client.scheduled_payments(
     account="08000133077",
     date_from=datetime(2019, 7, 1),
     date_to=datetime(2019, 8, 1),
 )
 
-# Sandbox
-ai_psd2_client.create_sandbox("unique_sandbox_id")
-sandbox_data = ai_psd2_client.export_sandbox("unique_sandbox_id")
-ai_psd2_client.import_sandbox("another_unique_sandbox_id", sandbox_data)
-ai_psd2_client.delete_sandbox("unique_sandbox_id")
+## Standing Orders resource
+client.standing_orders(
+    account="08000133077",
+    date_from=datetime(2019, 7, 1),
+    date_to=datetime(2019, 8, 1),
+)
 
-# User
-ai_psd2_client.current_user()
+## Sandbox resource
+client.create_sandbox("unique_sandbox_id")
+sandbox_data = client.export_sandbox("unique_sandbox_id")
+client.import_sandbox("another_unique_sandbox_id", sandbox_data)
+client.delete_sandbox("unique_sandbox_id")
+
+## User resource
+client.current_user()
 ```
