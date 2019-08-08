@@ -29,7 +29,7 @@ class BaseClient(Session):
     def _process_response(self, response: Response) -> json:
         raise NotImplementedError
 
-    def _api_request(self, method: str, url_path: str, data: dict) -> dict:
+    def _api_request(self, method: str, url_path: str, data: dict = {}) -> dict:
         headers = self._prepare_request_headers(method, data)
         auth = self._prepare_request_auth(method, data)
         body = self._prepare_request_body(method, data)
