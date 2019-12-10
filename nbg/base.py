@@ -36,7 +36,9 @@ class BaseClient(Session):
         )
         self._scopes = self._production_scopes if production else self._sandbox_scopes
 
-    def _prepare_request_headers(self, request_id: str, method: str, data: dict) -> dict:
+    def _prepare_request_headers(
+        self, request_id: str, method: str, data: dict
+    ) -> dict:
         headers = {}
         headers["Client-Id"] = self.client_id
         headers["Request-Id"] = request_id
@@ -44,10 +46,7 @@ class BaseClient(Session):
 
     def _prepare_request_body(self, request_id: str, method: str, data: dict) -> dict:
         body = {
-            "header": {
-                "ID": request_id,
-                "application": self.client_id,
-            },
+            "header": {"ID": request_id, "application": self.client_id},
             "payload": data,
         }
         return body
@@ -91,9 +90,7 @@ class BaseClient(Session):
     def exchange_authorization_code_with_token(self, authorization_code: str):
         response = requests.post(
             "https://my.nbg.gr/identity/connect/token",
-            headers={
-                "cache-control": "no-cache",
-            },
+            headers={"cache-control": "no-cache"},
             data={
                 "client_id": self.client_id,
                 "client_secret": self.client_secret,

@@ -5,9 +5,15 @@ verify_ssl = true
 
 [dev-packages]
 black = "==19.3b0"
+pytest = "*"
+mypy = "*"
 
 [packages]
 requests = "*"
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+test = "pytest nbg/"
+format = "black nbg/"
