@@ -1,6 +1,8 @@
-from . import exceptions, resources
+import typing
 
 import pytest
+
+from . import exceptions, resources
 
 
 class DummyResource(resources.BaseResource):
@@ -13,6 +15,10 @@ class DummyResource(resources.BaseResource):
 class DummyParentResource(resources.BaseResource):
     some_nested_dummy_resource: DummyResource
     another_int_arg: int
+
+
+class DummyResourceWithListAttribute(resources.BaseResource):
+    a_list_of_integers: typing.List[int]
 
 
 def test_resource_correct_init_with_arguments():
@@ -101,3 +107,10 @@ def test_resource_with_nested_resources():
     assert resource.some_nested_dummy_resource.some_bool_arg == True
     assert resource.some_nested_dummy_resource.some_dict_arg == {"c": "d"}
     assert resource.another_int_arg == 42
+
+
+def test_resource_with_list_attribute():
+    payload = {"a_list_of_integers": [1, "2", 3.8]}
+    resource = DummyResourceWithListAttribute(payload)
+
+    assert resource.a_list_of_integers == [1, 2, 3]
