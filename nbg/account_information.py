@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from . import base
+from .base import client, decorators
 
 
-class AccountInformationPSD2Client(base.BaseClient):
+class AccountInformationPSD2Client(client.BaseClient):
     _production_base_url = "https://services.nbg.gr/apis/account.info/v2"
     _sandbox_base_url = "https://apis.nbg.gr/sandbox/account.info/oauth2/v2"
 
@@ -85,16 +85,3 @@ class AccountInformationPSD2Client(base.BaseClient):
         """
         data = {"account": account, "dateFrom": date_from, "dateTo": date_to}
         return self._api_request("POST", "standing-orders/list", data)
-
-    def create_sandbox(self, sandbox_id: str) -> dict:
-        data = {"sandboxId": sandbox_id}
-        return self._api_request("POST", "sandbox", data)
-
-    def export_sandbox(self, sandbox_id: str) -> dict:
-        return self._api_request("GET", "sandbox/{sandbox_id}")
-
-    def import_sandbox(self, sandbox_id: str, data: dict) -> dict:
-        return self._api_request("PUT", "sandbox/{sandbox_id}", data)
-
-    def delete_sandbox(self, sandbox_id: str) -> dict:
-        return self._api_request("DELETE", f"sandbox/{sandbox_id}")
