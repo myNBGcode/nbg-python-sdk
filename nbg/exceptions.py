@@ -1,6 +1,15 @@
 from requests import Response
 
 
+class InvalidResponse(Exception):
+    def __init__(self, response: Response, message: str):
+        self.response = response
+        self.message = message
+
+    def __str__(self):
+        return f"{self.message}"
+
+
 class ResponseException(Exception):
     def __init__(self, response: Response):
         self.response = response
