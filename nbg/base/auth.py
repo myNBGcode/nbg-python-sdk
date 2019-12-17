@@ -15,6 +15,7 @@ class AccessTokenAuth(requests.auth.AuthBase):
 class AuthenticatedClientMixin:
     client_id: str
     client_secret: str
+    scopes: str
 
     def _prepare_request_auth(self, method: str, data: dict) -> AccessTokenAuth:
         return AccessTokenAuth(self._access_token)
@@ -22,7 +23,7 @@ class AuthenticatedClientMixin:
     def get_authorization_code_url(
         self, redirect_uri: str, scope: str = None, response_type: str = "code"
     ):
-        _scope = scope or " ".join(self._scopes)
+        _scope = scope or " ".join(self.scopes)
         params = {
             "client_id": self.client_id,
             "redirect_uri": redirect_uri,

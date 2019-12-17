@@ -5,28 +5,15 @@ from requests import Request, Response, Session
 from requests.auth import AuthBase
 import requests
 
-from . import auth, exceptions, utils
+from . import auth, exceptions, sandbox, utils
 
 
-class BaseClient(Session, auth.AuthenticatedClientMixin):
-    _base_url = ""
-    _production_base_url = ""
-    _sandbox_base_url = ""
-
-    _scopes = []
-    _production_scopes = []
-    _sandbox_scopes = []
-
+class BaseClient(Session, auth.AuthenticatedClientMixin, sandbox.SandboxedClientMixin):
     def __init__(self, client_id: str, client_secret: str, production: bool = False):
         super().__init__()
         self.client_id = client_id
         self.client_secret = client_secret
         self.production = production
-
-        self._base_url = (
-            self._production_base_url if production else self._sandbox_base_url
-        )
-        self._scopes = self._production_scopes if production else self._sandbox_scopes
 
     def _prepare_request_headers(
         self, request_id: str, method: str, data: dict
@@ -56,6 +43,6 @@ class BaseClient(Session, auth.AuthenticatedClientMixin):
         headers = self._prepare_request_headers(request_id, method, data)
         body = self._prepare_request_body(request_id, method, data)
         auth = self._prepare_request_auth(method, data)
-        url = f"{self._base_url}/{url_path}"
+        url = f"{self.base_url}/{url_path}"
         response = self.request(method, url, headers=headers, auth=auth, json=body)
         return self._process_response(response)
