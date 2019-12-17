@@ -1,0 +1,28 @@
+import json
+
+from requests import Request, Response
+
+from . import exceptions
+
+
+def validate_response(response: Response) -> dict:
+    try:
+        data = response.json()
+    except json.JSONDecodeError:
+        exception = exceptions.InvalidResponse(
+            response, "Response body is not valid JSON."
+        )
+        raise exception
+
+    required_keys = ("exception", "payload")
+    any_of_the_required_keys_in_body = any([key in data for key in required_keys])
+
+    if not any_of_the_required_keys_in_body:
+        missing_keys = ", ".join([key for key in required_keys if key not in data])
+        exception = exceptions.InvalidResponse(
+            response,
+            f"Invalid response body. The following keys are missing: {missing_keys}.",
+        )
+        raise exception
+
+    return data

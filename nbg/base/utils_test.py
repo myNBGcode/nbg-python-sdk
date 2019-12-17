@@ -3,7 +3,7 @@ import json
 from requests import Response
 import pytest
 
-from . import base, exceptions
+from . import exceptions, utils
 
 
 def _get_dummy_response(body) -> Response:
@@ -19,7 +19,7 @@ def _get_dummy_response(body) -> Response:
 def test_validate_response_with_valid_response():
     response_body = {"payload": {"msg": "I am so valid!"}}
     valid_response = _get_dummy_response(response_body)
-    validated_response = base.validate_response(valid_response)
+    validated_response = utils.validate_response(valid_response)
 
     assert validated_response == response_body
 
@@ -29,7 +29,7 @@ def test_validate_response_with_missing_keys():
     invalid_response = _get_dummy_response(response_body)
 
     with pytest.raises(exceptions.InvalidResponse) as exception_info:
-        base.validate_response(invalid_response)
+        utils.validate_response(invalid_response)
 
     message = (
         "Invalid response body. " "The following keys are missing: exception, payload."
@@ -43,6 +43,6 @@ def test_validate_response_with_invalid_json():
     invalid_response = _get_dummy_response(response_body)
 
     with pytest.raises(exceptions.InvalidResponse) as exception_info:
-        base.validate_response(invalid_response)
+        utils.validate_response(invalid_response)
 
     assert str(exception_info.value) == "Response body is not valid JSON."
