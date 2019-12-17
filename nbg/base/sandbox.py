@@ -1,12 +1,14 @@
+import typing
+
 from . import decorators, resources
 
 
 class Sandbox(resources.BaseResource):
     sanboxId: str
     version: int
-    # TODO: users
-    # TODO: consentApplicationIds
-    # TODO: consents
+    users: typing.List[dict]  # TODO: implement `User`
+    consentApplicationIds: typing.List[dict]  # TODO: implement `ApplicationId`
+    consents: typing.List[dict]  # TODO: implement `SandboxConsentModel`
 
 
 class SandboxedClientMixin:
@@ -50,3 +52,7 @@ class SandboxedClientMixin:
 
     def set_sandbox(self, sandbox_id: str):
         self._sandbox_id = sandbox_id
+
+    def append_sandbox_headers(self, headers: dict) -> dict:
+        headers["sandbox_id"] = self._sandbox_id
+        return headers
