@@ -47,7 +47,7 @@ class SandboxedClientMixin:
         return self._api_request("PUT", "sandbox/{sandbox_id}", data)
 
     @decorators.api_call
-    def delete_sandbox(self, sandbox_id: str) -> dict:
+    def delete_sandbox(self, sandbox_id: str) -> bool:
         return self._api_request("DELETE", f"sandbox/{sandbox_id}")
 
     def set_sandbox(self, sandbox_id: str):
