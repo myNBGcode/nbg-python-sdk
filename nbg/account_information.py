@@ -10,11 +10,12 @@ class AccountInformationPSD2Client(client.BaseClient):
     _production_scopes = ["openid", "profile", "ibank_profile", "role", "sandbox-account-info-api-v2"]
     _sandbox_scopes = ["openid", "profile", "role", "sandbox-account-info-api-v2"]
 
-    def accounts(self) -> dict:
+    def accounts(self, userId: str) -> dict:
         """
         [Extensive documentation]
         """
-        return self._api_request("POST", "account/list")
+        data = {'userId': userId}
+        return self._api_request("POST", "account/list", data)
 
     def account_beneficiaries(self, iban: str) -> dict:
         """
