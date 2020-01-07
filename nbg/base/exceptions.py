@@ -14,15 +14,17 @@ class InvalidResponse(Exception):
 
 class GenericResponseError(Exception):
     descriptions = {
-        ["1.1.0"]: "Only POST method is allowed",
-        ["1.1.1", "2.1.2"]: "Header Error : Header is NULL",
-        ["1.1.3"]: "Header Error : Application is NULL",
-        ["1.2"]: "Model state is invalid",
-        ["C.0.0", "C.0.1"]: "Action not allowed for CORPORATE users",
-        ["2.1.1"]: "Request body is null",
-        ["2.2.1"]: "UserId is null",
-        ["2.2.3"]: "Inconsistent User ID",
-        ["3.1.1"]: "header.ID/header.application must be valid GUIDs",
+        "1.1.0": "Only POST method is allowed",
+        "1.1.1": "Header Error : Header is NULL",
+        "2.1.2": "Header Error : Header is NULL",
+        "1.1.3": "Header Error : Application is NULL",
+        "1.2": "Model state is invalid",
+        "C.0.0": "Action not allowed for CORPORATE users",
+        "C.0.1": "Action not allowed for CORPORATE users",
+        "2.1.1": "Request body is null",
+        "2.2.1": "UserId is null",
+        "2.2.3": "Inconsistent User ID",
+        "3.1.1": "header.ID/header.application must be valid GUIDs",
     }
 
     def __init__(self, response: Response):
@@ -36,12 +38,11 @@ class GenericResponseError(Exception):
             raise InvalidResponse(response, "Invalid generic error code message.")
 
         self.code = code_pattern_match.groups()[0]
-        self.description = "Unknown generic error code"
-
-        for codes, description in self.descriptions.items():
-            if self.code in codes:
-                self.description = description
-                break
+        self.description = (
+            self.descriptions[self.code]
+            if self.code in self.descriptions
+            else "Unknown generic error code"
+        )
 
 
 class ResponseException(Exception):
