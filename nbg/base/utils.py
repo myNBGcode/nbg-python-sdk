@@ -14,7 +14,7 @@ def validate_response(response: Response) -> dict:
         )
         raise exception
 
-    required_keys = ("exception", "payload")
+    required_keys = ("exception", "payload", "Message")
     any_of_the_required_keys_in_body = any([key in data for key in required_keys])
 
     if not any_of_the_required_keys_in_body:

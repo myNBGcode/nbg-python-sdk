@@ -36,6 +36,9 @@ class BaseClient(Session, auth.AuthenticatedClientMixin, sandbox.SandboxedClient
     def _process_response(self, response: Response) -> dict:
         data = utils.validate_response(response)
 
+        if data.get("Message"):
+            raise exceptions.GenericResponseError(response)
+
         if data.get("exception"):
             raise exceptions.ResponseException(response)
 
