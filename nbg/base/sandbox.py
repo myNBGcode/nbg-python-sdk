@@ -34,7 +34,7 @@ class SandboxedClientMixin:
         return _scopes
 
     @decorators.api_call
-    def create_sandbox(self, sandbox_id: str) -> Sandbox:
+    def create_sandbox(self, sandbox_id: str) -> dict:
         data = {"sandboxId": sandbox_id}
         return self._api_request("POST", "sandbox", data)
 
