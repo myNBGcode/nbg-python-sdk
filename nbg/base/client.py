@@ -24,6 +24,15 @@ class BaseClient(Session, auth.AuthenticatedClientMixin, sandbox.SandboxedClient
         headers["X-Certificate-Check"] = "true" if self.production else "false"
         headers["X-Consent-Check"] = "true" if self.production else "false"
 
+        if hasattr(self, "_signature"):
+            headers["Signature"] = self._signature
+
+        if hasattr(self, "_signature_certificate"):
+            headers["TPP-Signature-Certificate"] = self._signature_certificate
+
+        if hasattr(self, "_consent"):
+            headers["Consent-Id"] = self._consent
+
         return headers
 
     def _prepare_request_body(self, request_id: str, method: str, data: dict) -> dict:

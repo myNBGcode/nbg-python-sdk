@@ -57,10 +57,23 @@ class AuthenticatedClientMixin:
         data = {"applicationId": self.client_id}
         return self._api_request("POST", "consents/request-access", data)
 
-    def get_consent_information(self, user_id: str, consent_id: str) -< dict:
-        data = {"applicationId": self.client_id, "userId": user_id, "consentId": consent_id}
+    def get_consent_information(self, user_id: str, consent_id: str) -> dict:
+        data = {
+            "applicationId": self.client_id,
+            "userId": user_id,
+            "consentId": consent_id,
+        }
         return self._api_request("POST", "consents/info", data)
 
-    def delete_consent(self, user_id: str, consent_id: str, tan_number: str) -< dict:
+    def delete_consent(self, user_id: str, consent_id: str, tan_number: str) -> dict:
         data = {"userId": user_id, "consentId": consent_id, "tanNumber": tan_number}
         return self._api_request("POST", "consents/delete", data)
+
+    def set_consent(self, consent: str):
+        self._consent = consent
+
+    def set_signature(self, signature: str):
+        self._signature = signature
+
+    def set_signature_certificate(self, signature_certificate: str):
+        self._signature_certificate = signature_certificate
