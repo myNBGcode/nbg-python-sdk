@@ -33,6 +33,14 @@ class SandboxedClientMixin:
         _scopes = self._production_scopes if self.production else self._sandbox_scopes
         return _scopes
 
+    @property
+    def application_id(self):
+        return (
+            self.client_id
+            if self.production
+            else "72F01708-BE1E-4567-926E-8C87D03CA551"
+        )
+
     @decorators.api_call
     def create_sandbox(self, sandbox_id: str) -> dict:
         data = {"sandboxId": sandbox_id}
@@ -40,11 +48,11 @@ class SandboxedClientMixin:
 
     @decorators.api_call
     def export_sandbox(self, sandbox_id: str) -> dict:
-        return self._api_request("GET", "sandbox/{sandbox_id}")
+        return self._api_request("GET", f"sandbox/{sandbox_id}")
 
     @decorators.api_call
     def import_sandbox(self, sandbox_id: str, data: dict) -> dict:
-        return self._api_request("PUT", "sandbox/{sandbox_id}", data)
+        return self._api_request("PUT", f"sandbox/{sandbox_id}", data)
 
     @decorators.api_call
     def delete_sandbox(self, sandbox_id: str) -> bool:

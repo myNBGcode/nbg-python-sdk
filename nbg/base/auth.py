@@ -54,7 +54,7 @@ class AuthenticatedClientMixin:
         self._access_token = access_token
 
     def generate_consent(self) -> dict:
-        data = {"applicationId": self.client_id}
+        data = {"applicationId": self.application_id}
         return self._api_request("POST", "consents/request-access", data)
 
     def get_consent_information(self, user_id: str, consent_id: str) -> dict:
