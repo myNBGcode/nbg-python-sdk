@@ -5,10 +5,12 @@ from requests import Request, Response, Session
 from requests.auth import AuthBase
 import requests
 
-from . import auth, exceptions, sandbox, utils
+from . import auth, environment, exceptions, utils
 
 
-class BaseClient(Session, auth.AuthenticatedClientMixin, sandbox.SandboxedClientMixin):
+class BaseClient(
+    Session, auth.AuthenticatedClientMixin, environment.EnvironmentClientMixin
+):
     def __init__(self, client_id: str, client_secret: str, production: bool = False):
         super().__init__()
         self.client_id = client_id

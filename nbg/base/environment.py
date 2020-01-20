@@ -11,7 +11,7 @@ class Sandbox(resources.BaseResource):
     consents: typing.List[dict]  # TODO: implement `SandboxConsentModel`
 
 
-class SandboxedClientMixin:
+class EnvironmentClientMixin:
     _production_base_url = ""
     _sandbox_base_url = ""
 
