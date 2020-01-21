@@ -1,4 +1,5 @@
 import json
+import typing
 import uuid
 
 from requests import Request, Response, Session
@@ -6,6 +7,10 @@ from requests.auth import AuthBase
 import requests
 
 from . import auth, environment, exceptions, utils
+
+
+LIST_OF_DICTS = typing.List[dict]
+DICT_OR_LIST_OF_DICTS = typing.Union[dict, LIST_OF_DICTS]
 
 
 class BaseClient(
@@ -17,23 +22,8 @@ class BaseClient(
         self.client_secret = client_secret
         self.production = production
 
-    def _prepare_request_headers(
-        self, request_id: str, method: str, data: dict
-    ) -> dict:
-        headers = {}
-        headers["Client-Id"] = self.client_id
-        headers["Request-Id"] = request_id
-        headers["X-Certificate-Check"] = "true" if self.production else "false"
-        headers["X-Consent-Check"] = "true" if self.production else "false"
-
-        if hasattr(self, "_signature"):
-            headers["Signature"] = self._signature
-
-        if hasattr(self, "_signature_certificate"):
-            headers["TPP-Signature-Certificate"] = self._signature_certificate
-
-        if hasattr(self, "_consent"):
-            headers["Consent-Id"] = self._consent
+    def _prepare_request_headers(self, request_id: str) -> dict:
+        headers = {"Request-Id": request_id}
 
         return headers
 
@@ -55,15 +45,18 @@ class BaseClient(
 
         return data["payload"]
 
-    def _api_request(self, method: str, url_path: str, data: dict = {}) -> dict:
+    def _api_request(
+        self, method: str, url_path: str, data: dict = {}, headers: DICT_OR_LIST_OF_DICTS = {}
+    ) -> dict:
         request_id = str(uuid.uuid4())
-        headers = self._prepare_request_headers(request_id, method, data)
+        _headers = {"Request-Id": request_id, "Client-Id": self.client_id}
+        list_of_headers = [headers] if isinstance(headers, dict) else headers
 
-        if hasattr(self, "_sandbox_id"):
-            headers = self.append_sandbox_headers(headers)
+        for header_set in list_of_headers:
+            _headers.update(header_set)
 
         body = self._prepare_request_body(request_id, method, data)
         auth = self._prepare_request_auth(method, data)
         url = f"{self.base_url}/{url_path}"
-        response = self.request(method, url, headers=headers, auth=auth, json=body)
+        response = self.request(method, url, headers=_headers, auth=auth, json=body)
         return self._process_response(response)

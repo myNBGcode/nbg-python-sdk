@@ -32,7 +32,8 @@ def test_validate_response_with_missing_keys():
         utils.validate_response(invalid_response)
 
     message = (
-        "Invalid response body. " "The following keys are missing: exception, payload, Message."
+        "Invalid response body. "
+        "The following keys are missing: exception, payload, Message."
     )
 
     assert str(exception_info.value) == message

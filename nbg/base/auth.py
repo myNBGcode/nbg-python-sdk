@@ -17,6 +17,34 @@ class AuthenticatedClientMixin:
     client_secret: str
     scopes: str
 
+    @property
+    def consent_headers(self) -> dict:
+        headers = {"X-Consent-Check": "true" if self.production else "false"}
+
+        if hasattr(self, "_consent"):
+            headers["Consent-Id"] = self._consent
+
+        return headers
+
+    @property
+    def signature_headers(self) -> dict:
+        headers = {"X-Certificate-Check": "true" if self.production else "false"}
+
+        if hasattr(self, "_signature"):
+            headers["Signature"] = self._signature
+
+        if hasattr(self, "_signature_certificate"):
+            headers["TPP-Signature-Certificate"] = self._signature_certificate
+
+        return headers
+
+    @property
+    def auth_headers(self) -> dict:
+        headers = {}
+        headers.update(self.consent_headers)
+        headers.update(self.signature_headers)
+        return headers
+
     def _prepare_request_auth(self, method: str, data: dict) -> AccessTokenAuth:
         return AccessTokenAuth(self._access_token)
 
@@ -55,7 +83,8 @@ class AuthenticatedClientMixin:
 
     def generate_consent(self) -> dict:
         data = {"applicationId": self.application_id}
-        return self._api_request("POST", "consents/request-access", data)
+        headers = [self.environment_headers, self.signature_headers]
+        return self._api_request("POST", "consents/request-access", data, headers)
 
     def get_consent_information(self, user_id: str, consent_id: str) -> dict:
         data = {
@@ -63,11 +92,13 @@ class AuthenticatedClientMixin:
             "userId": user_id,
             "consentId": consent_id,
         }
-        return self._api_request("POST", "consents/info", data)
+        headers = [self.environment_headers, self.signature_headers]
+        return self._api_request("POST", "consents/info", data, headers)
 
     def delete_consent(self, user_id: str, consent_id: str, tan_number: str) -> dict:
         data = {"userId": user_id, "consentId": consent_id, "tanNumber": tan_number}
-        return self._api_request("POST", "consents/delete", data)
+        headers = [self.environment_headers, self.signature_headers]
+        return self._api_request("POST", "consents/delete", data, headers)
 
     def set_consent(self, consent: str):
         self._consent = consent

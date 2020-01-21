@@ -36,11 +36,16 @@ def test_set_sandbox(dummy_client: environment.EnvironmentClientMixin):
     assert dummy_client._sandbox_id == sandbox_id
 
 
-def test_append_sandbox_headers(dummy_client: environment.EnvironmentClientMixin):
+def test_environment_headers_sandbox(dummy_client: environment.EnvironmentClientMixin):
     sandbox_id = "amazing-sandbox-id"
     dummy_client.set_sandbox(sandbox_id)
-    headers = {"Authorization": "Bearer: ThisIsOneToken"}
 
-    processed_headers = dummy_client.append_sandbox_headers(headers)
-    assert headers == processed_headers
-    assert headers["sandbox_id"] == sandbox_id
+    assert dummy_client.environment_headers == {"sandbox_id": sandbox_id}
+
+
+def test_environment_headers_production(dummy_client: environment.EnvironmentClientMixin):
+    sandbox_id = "amazing-sandbox-id-that-should-not-appear"
+    dummy_client.set_sandbox(sandbox_id)
+    dummy_client.production = True
+
+    assert dummy_client.environment_headers == {}  # Empty

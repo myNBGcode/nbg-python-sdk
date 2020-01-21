@@ -41,6 +41,13 @@ class EnvironmentClientMixin:
             else "72F01708-BE1E-4567-926E-8C87D03CA551"
         )
 
+    @property
+    def environment_headers(self):
+        if hasattr(self, "_sandbox_id") and not self.production:
+            return {"sandbox_id": self._sandbox_id}
+
+        return {}
+
     @decorators.api_call
     def create_sandbox(self, sandbox_id: str) -> dict:
         data = {"sandboxId": sandbox_id}
@@ -60,7 +67,3 @@ class EnvironmentClientMixin:
 
     def set_sandbox(self, sandbox_id: str):
         self._sandbox_id = sandbox_id
-
-    def append_sandbox_headers(self, headers: dict) -> dict:
-        headers["sandbox_id"] = self._sandbox_id
-        return headers
