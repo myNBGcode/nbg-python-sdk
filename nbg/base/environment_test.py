@@ -43,7 +43,9 @@ def test_environment_headers_sandbox(dummy_client: environment.EnvironmentClient
     assert dummy_client.environment_headers == {"sandbox_id": sandbox_id}
 
 
-def test_environment_headers_production(dummy_client: environment.EnvironmentClientMixin):
+def test_environment_headers_production(
+    dummy_client: environment.EnvironmentClientMixin,
+):
     sandbox_id = "amazing-sandbox-id-that-should-not-appear"
     dummy_client.set_sandbox(sandbox_id)
     dummy_client.production = True

@@ -46,7 +46,11 @@ class BaseClient(
         return data["payload"]
 
     def _api_request(
-        self, method: str, url_path: str, data: dict = {}, headers: DICT_OR_LIST_OF_DICTS = {}
+        self,
+        method: str,
+        url_path: str,
+        data: dict = {},
+        headers: DICT_OR_LIST_OF_DICTS = {},
     ) -> dict:
         request_id = str(uuid.uuid4())
         _headers = {"Request-Id": request_id, "Client-Id": self.client_id}
