@@ -36,7 +36,7 @@ class BaseResource:
 
     def _cast_value(self, value, value_type):
         value_type_origin = getattr(value_type, "__origin__", None)
-        value_type_is_list = value_type_origin == typing.List
+        value_type_is_list = value_type_origin in (typing.List, list)
 
         if value_type_is_list:
             internal_value_type = value_type.__args__[0]
