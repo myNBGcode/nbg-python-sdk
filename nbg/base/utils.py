@@ -1,3 +1,7 @@
+"""
+Generic utilities used by the base client of all NBG APIs.
+"""
+
 import json
 
 from requests import Request, Response
@@ -6,6 +10,10 @@ from . import exceptions
 
 
 def validate_response(response: Response) -> dict:
+    """
+    Validates that the given response is valid JSON and it contains all required
+    fields.
+    """
     try:
         data = response.json()
     except json.JSONDecodeError:
