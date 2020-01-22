@@ -7,14 +7,20 @@ class AccountInformationPSD2Client(client.BaseClient):
     _production_base_url = "https://services.nbg.gr/apis/account.info/v2"
     _sandbox_base_url = "https://apis.nbg.gr/sandbox/account.info/oauth2/v2"
 
-    _production_scopes = ["openid", "profile", "ibank_profile", "role", "sandbox-account-info-api-v2"]
+    _production_scopes = [
+        "openid",
+        "profile",
+        "ibank_profile",
+        "role",
+        "sandbox-account-info-api-v2",
+    ]
     _sandbox_scopes = ["openid", "profile", "role", "sandbox-account-info-api-v2"]
 
     def accounts(self, userId: str) -> dict:
         """
         [Extensive documentation]
         """
-        data = {'userId': userId}
+        data = {"userId": userId}
         return self._api_request("POST", "account/list", data)
 
     def account_beneficiaries(self, iban: str) -> dict:
