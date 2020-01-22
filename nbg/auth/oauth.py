@@ -29,7 +29,7 @@ class OAuthClientMixin:
     client_secret: str
     scopes: str
 
-    def _exchange_authorization_code(self, authorization_code: str) -> dict:
+    def _exchange_authorization_code(self, authorization_code: str, redirect_uri: str) -> dict:
         response = requests.post(
             "https://my.nbg.gr/identity/connect/token",
             headers={"cache-control": "no-cache"},
@@ -38,7 +38,7 @@ class OAuthClientMixin:
                 "client_secret": self.client_secret,
                 "grant_type": "authorization_code",
                 "code": authorization_code,
-                "redirect_uri": "https://developer.nbg.gr/oauth2/redoc-callback",
+                "redirect_uri": redirect_uri,
             },
         )
         return response.json()
@@ -83,10 +83,10 @@ class OAuthClientMixin:
         """
         self._access_token = access_token
 
-    def set_access_token_from_authorization_code(self, authorization_code: str):
+    def set_access_token_from_authorization_code(self, authorization_code: str, redirect_uri: str):
         """
         Exchanges an authorization code with an access token and sets the
         access token accordingly for the current client.
         """
-        access_token_response = self._exchange_authorization_code(authorization_code)
+        access_token_response = self._exchange_authorization_code(authorization_code, redirect_uri)
         self.set_access_token(access_token_response["access_token"])
