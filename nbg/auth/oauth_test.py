@@ -75,7 +75,7 @@ def test_oauth_client_access_token(client):
     ):
         client.set_access_token_from_authorization_code(
             "the-authorization-code-you-got", redirect_uri,
-        ) 
+        )
         assert client.access_token == access_token_2
 
 
