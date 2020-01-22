@@ -61,7 +61,7 @@ class BaseClient(
     ) -> dict:
         request_id = str(uuid.uuid4())
         body = self._prepare_request_body(request_id, method, data)
-        auth = self._prepare_request_auth(method, data)
+        auth = self.request_auth
 
         _headers = {"Request-Id": request_id, "Client-Id": self.client_id}
         list_of_headers = [headers] if isinstance(headers, dict) else headers
