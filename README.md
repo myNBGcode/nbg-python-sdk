@@ -34,8 +34,7 @@ client.set_access_token("access_token_of_your_user")  # Also sets default `user_
 
 # Step 2 - Set up a sandbox, when in development
 client.create_sandbox("sandbox_id")
-client.set_default_sandbox("sandbox_id")
-client.set_consent_id("consent_id")
+client.set_sandbox("sandbox_id")
 
 # Step 3 - Start working with the Account information API
 
