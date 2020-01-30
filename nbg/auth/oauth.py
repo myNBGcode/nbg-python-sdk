@@ -86,6 +86,7 @@ class OAuthClientMixin:
         Sets the access token for the current client.
         """
         self._access_token = access_token
+        return access_token
 
     def set_access_token_from_authorization_code(self, authorization_code: str, redirect_uri: str):
         """
@@ -103,4 +104,4 @@ class OAuthClientMixin:
             raise exceptions.OAuthTokenException(error, e)
 
         access_token = access_token_response_body["access_token"]
-        self.set_access_token(access_token)
+        return self.set_access_token(access_token)
