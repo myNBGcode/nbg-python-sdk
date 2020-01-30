@@ -11,6 +11,8 @@ class SignedClientMixin:
     Enables NBG API clients that can sign requests and verify responses based
     on QSeal certificates.
     """
+    _tpp_private_key: str = None
+    _tpp_certificate: str = None
 
     @property
     def nbg_certificate(self):
@@ -31,9 +33,11 @@ class SignedClientMixin:
     def signing_enabled(self):
         """
         Returns whether request signing and response verification is enabled
-        for the current client.
+        for the current client. Signing is always enabled in production mode
+        and in sandbox, when the TPP private key has been set via the
+        ``set_tpp_private_key`` method.
         """
-        return self.production
+        return self.production or self._tpp_private_key
 
     @property
     def tpp_private_key(self):
