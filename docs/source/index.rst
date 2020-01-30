@@ -1,10 +1,14 @@
-Welcome to NBG Python SDK's documentation!
-==========================================
+NBG Python SDK
+==============
+
+This is the documentation of the official Python SDK for the APIs of the National Bank of Greece.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Tabe of Contents
 
+   installation
+   guides
    base
    auth
 
