@@ -4,7 +4,10 @@ Utilities for authenticating requests based on OAuth 2 and OpenID Connect.
 
 from requests import Request
 from requests.auth import AuthBase
+from requests.exceptions import HTTPError
 import requests
+
+from . import exceptions
 
 
 class AccessTokenAuth(requests.auth.AuthBase):
@@ -29,8 +32,10 @@ class OAuthClientMixin:
     client_secret: str
     scopes: str
 
-    def _exchange_authorization_code(self, authorization_code: str, redirect_uri: str) -> dict:
-        response = requests.post(
+    def _exchange_authorization_code(
+        self, authorization_code: str, redirect_uri: str
+    ) -> dict:
+        return requests.post(
             "https://my.nbg.gr/identity/connect/token",
             headers={"cache-control": "no-cache"},
             data={
@@ -41,7 +46,6 @@ class OAuthClientMixin:
                 "redirect_uri": redirect_uri,
             },
         )
-        return response.json()
 
     @property
     def access_token(self) -> str:
@@ -88,5 +92,15 @@ class OAuthClientMixin:
         Exchanges an authorization code with an access token and sets the
         access token accordingly for the current client.
         """
-        access_token_response = self._exchange_authorization_code(authorization_code, redirect_uri)
-        self.set_access_token(access_token_response["access_token"])
+        try:
+            access_token_response = self._exchange_authorization_code(
+                authorization_code, redirect_uri
+            )
+            access_token_response_body = access_token_response.json()
+            access_token_response.raise_for_status()
+        except HTTPError as e:
+            error = access_token_response_body["error"]
+            raise exceptions.OAuthTokenException(error, e)
+
+        access_token = access_token_response_body["access_token"]
+        self.set_access_token(access_token)

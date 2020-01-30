@@ -19,3 +19,9 @@ OAuth
 -----------------
 .. automodule:: nbg.auth.oauth
     :members:
+
+
+Exceptions
+-----------------
+.. automodule:: nbg.auth.exceptions
+    :members:
