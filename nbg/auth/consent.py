@@ -10,6 +10,7 @@ class ConsentClient(oauth.OAuthClientMixin, signature.SignedClientMixin):
     Base class for managing consents and authorising requests based on the
     consents framework.
     """
+
     @property
     def consent_id(self):
         """

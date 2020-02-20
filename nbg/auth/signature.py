@@ -5,12 +5,15 @@ certificates.
 
 import os
 
+from jose import jws
+
 
 class SignedClientMixin:
     """
     Enables NBG API clients that can sign requests and verify responses based
     on QSeal certificates.
     """
+
     _tpp_private_key: str = None
     _tpp_certificate: str = None
 
@@ -37,7 +40,7 @@ class SignedClientMixin:
         and in sandbox, when the TPP private key has been set via the
         ``set_tpp_private_key`` method.
         """
-        return self.production or self._tpp_private_key
+        return self.production or self.tpp_private_key
 
     @property
     def tpp_private_key(self):
@@ -56,7 +59,7 @@ class SignedClientMixin:
 
     def set_tpp_private_key(self, tpp_private_key: str):
         """
-        Set the TPP private key used by the current client instance to sign
+        Loads the TPP private key used by the current client instance to sign
         requests to the server.
         """
         self._tpp_private_key = tpp_private_key
@@ -76,16 +79,11 @@ class SignedClientMixin:
         headers = {"X-Certificate-Check": "true" if self.signing_enabled else "false"}
 
         if self.signing_enabled:
-            headers["Signature"] = "not-implemented"  # TODO: Implement this
+            signed_payload = jws.sign(body, self.tpp_private_key, algorithm="RS256")
+            header, payload, signature = signed_payload.split(".")
+            headers["Signature"] = f"{header}..{signature}"
 
-        if hasattr(self, "_signature_certificate"):
+        if self.tpp_certificate:
             headers["TPP-Signature-Certificate"] = self.tpp_certificate
 
         return headers
-
-    def verify_response(self, response) -> bool:
-        """
-        Verify response based on the current NBG Certificate.
-        """
-        # TODO: Implement this
-        return True

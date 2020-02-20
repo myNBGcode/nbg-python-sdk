@@ -12,6 +12,7 @@ class InvalidResponse(Exception):
     This exception is being raised when an invalid response was received by
     the server.
     """
+
     def __init__(self, response: Response, message: str):
         self.response = response
         self.message = message
@@ -25,6 +26,7 @@ class GenericResponseError(Exception):
     This exception is being raised when the JSON response received by the
     server indicates that a generic error has taken place.
     """
+
     descriptions = {
         "1.1.0": "Only POST method is allowed",
         "1.1.1": "Header Error : Header is NULL",
@@ -62,6 +64,7 @@ class ResponseException(Exception):
     This exception is being raised when the JSON response received by the
     server indicates that an exception has been raised.
     """
+
     def __init__(self, response: Response):
         self.response = response
 
@@ -82,6 +85,7 @@ class MissingResourceArguments(Exception):
     This exception is being raised when the JSON object does not contain all
     required fields, as defined in the corresponding resource.
     """
+
     def __init__(self, resource_class, missing_arguments):
         self.resource_class = resource_class
         self.missing_arguments = missing_arguments

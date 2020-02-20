@@ -15,6 +15,7 @@ class AccessTokenAuth(requests.auth.AuthBase):
     Authentication class, based on the `requests` library, for use by the
     a client to authenticate requests with an access token.
     """
+
     def __init__(self, access_token: str):
         self.access_token = access_token
 
@@ -28,6 +29,7 @@ class OAuthClientMixin:
     Enables implementation of NBG API clients that can authenticate requests
     based on OAuth2 access tokens.
     """
+
     client_id: str
     client_secret: str
     scopes: str
@@ -88,7 +90,9 @@ class OAuthClientMixin:
         self._access_token = access_token
         return access_token
 
-    def set_access_token_from_authorization_code(self, authorization_code: str, redirect_uri: str):
+    def set_access_token_from_authorization_code(
+        self, authorization_code: str, redirect_uri: str
+    ):
         """
         Exchanges an authorization code with an access token and sets the
         access token accordingly for the current client.

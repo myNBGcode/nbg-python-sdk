@@ -21,6 +21,7 @@ class EnvironmentClientMixin:
     Enables sending requests to both production and sandbox APIs and also
     targeting requests to particular sandboxes.
     """
+
     _production_base_url = ""
     _sandbox_base_url = ""
 

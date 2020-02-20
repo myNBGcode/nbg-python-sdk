@@ -2,11 +2,13 @@
 Exceptions used by the authentication framework of the NBG APIs.
 """
 
+
 class OAuthTokenException(Exception):
     """
     This exception is being raised when an authorisation code cannot be
     exchanged with an access token.
     """
+
     message: str
     original_exception: Exception
 

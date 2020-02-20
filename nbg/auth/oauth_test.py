@@ -1,4 +1,5 @@
 from unittest import mock
+import os
 import urllib
 
 from requests import Request
@@ -19,6 +20,18 @@ def client() -> oauth.OAuthClientMixin:
     client.client_secret = "client-secret-used-for-testing"
     client.set_access_token("access-token-used-for-testing")
     return client
+
+
+@pytest.fixture
+def private_key() -> bytes:
+    """
+    Return the testing PEM private key fixture.
+    """
+    fixture_directory = os.path.dirname(__file__)
+    fixture_path = os.path.join(fixture_directory, "private_key.pem")
+
+    with open(fixture_path, "rb") as f:
+        return f.read()
 
 
 class DummyRequest(Request):
@@ -52,14 +65,16 @@ def test_oauth_client_access_token(client):
     assert client.access_token == access_token
 
     access_token_2 = "another-access-token-for-testing"
-    dummy_access_token_response = {"access_token": access_token_2}
+    redirect_uri = "http://redirect-uri.test"
+    dummy_access_token_response = mock.MagicMock()
+    dummy_access_token_response.json.return_value = {"access_token": access_token_2}
 
     with mock.patch(
         "nbg.auth.oauth.OAuthClientMixin._exchange_authorization_code",
         return_value=dummy_access_token_response,
     ):
         client.set_access_token_from_authorization_code(
-            "the-authorization-code-you-got"
+            "the-authorization-code-you-got", redirect_uri,
         )
         assert client.access_token == access_token_2
 

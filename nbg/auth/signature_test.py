@@ -1,3 +1,4 @@
+from unittest import mock
 import os
 
 import pytest
@@ -41,26 +42,39 @@ def test_tpp_certificate(client):
 
 def test_tpp_private_key(client):
     """
-    Ensure that the TPP private_key can be set and read successfully on the client
-    via a public method and property accordingly.
+    Ensure that the TPP private_key can be set and read successfully on the
+    client via a public method and property accordingly.
     """
-    tpp_private_key = "this-should-be-a-tpp-private-key"
+    tpp_private_key = "secret-key"
     client.set_tpp_private_key(tpp_private_key)
 
     assert client.tpp_private_key == tpp_private_key
 
-@pytest.mark.skip(reason="Request signing has not been implemented yet.")
-def test_signature_headers():
+
+def test_signature_headers(client):
     """
     Ensure that `SignedClientMixin` generates the appropriate HTTP headers for
     the provided request body.
     """
-    pass
+    request_body = {}
+    jws_signature = "some_header.some_payload.some_signature"
+    jws_detached_signature = "some_header..some_signature"
+    tpp_private_key = "secret-key"
+    tpp_certificate = "this-is-a-certificate"
+    expected_signature_headers = {
+        "X-Certificate-Check": "true",
+        "TPP-Signature-Certificate": tpp_certificate,
+        "Signature": jws_detached_signature,
+    }
 
+    client.set_tpp_private_key(tpp_private_key)
+    client.set_tpp_certificate(tpp_certificate)
 
-@pytest.mark.skip(reason="Verifying signed responses has not been implemented yet.")
-def test_verify_response():
-    """
-    Ensure that `SignedClientMixin` can successfully verify a signed response.
-    """
-    pass
+    with mock.patch("nbg.auth.signature.SignedClientMixin.signing_enabled", True):
+        with mock.patch("jose.jws.sign", return_value=jws_signature) as sign_mock:
+            signature_headers = client.signature_headers(request_body)
+
+    sign_mock.assert_called_once_with(
+        request_body, tpp_private_key, algorithm="RS256",
+    )
+    assert signature_headers == expected_signature_headers

@@ -28,7 +28,10 @@ def test_consent_headers(client):
     client.set_consent_id(consent_id)
     client.production = True
 
-    assert client.consent_headers == {"X-Consent-Check": "true", "Consent-Id": consent_id}
+    assert client.consent_headers == {
+        "X-Consent-Check": "true",
+        "Consent-Id": consent_id,
+    }
 
     client.production = False
 
