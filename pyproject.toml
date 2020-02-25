@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nbg"
-version = "0.2.0"
+version = "0.4.0"
 description = "Official Python SDK for NBG APIs"
 authors = ["Paris Kasidiaris <paris@sourcelair.com>"]
 readme = "README.md"
