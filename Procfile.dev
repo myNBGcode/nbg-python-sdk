@@ -1,0 +1,1 @@
+web: cd docs && make html && cd build/html && python -m http.server ${PORT:-8000}

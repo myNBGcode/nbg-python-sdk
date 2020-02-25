@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "nbg"
+version = "0.2.0"
+description = "Official Python SDK for NBG APIs"
+authors = ["Paris Kasidiaris <paris@sourcelair.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+requests = "^2.22.0"
+python-jose = {extras = ["cryptography"], version = "^3.1.0"}
+
+[tool.poetry.dev-dependencies]
+black = "^19.10b0"
+pytest = "^5.3.4"
+mypy = "^0.761"
+sphinx = "^2.3.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
