@@ -4,17 +4,17 @@ from .base import client, decorators
 
 
 class AccountInformationPSD2Client(client.BaseClient):
-    _production_base_url = "https://services.nbg.gr/apis/account.info/v2"
-    _sandbox_base_url = "https://apis.nbg.gr/sandbox/account.info/oauth2/v2"
+    _production_base_url = "https://services.nbg.gr/apis/account.info/v2.1"
+    _sandbox_base_url = "https://apis.nbg.gr/sandbox/account.info/oauth2/v2.1"
 
     _production_scopes = [
         "openid",
         "profile",
         "ibank_profile",
         "role",
-        "sandbox-account-info-api-v2",
+        "account-info-api-v2-1",
     ]
-    _sandbox_scopes = ["openid", "profile", "role", "sandbox-account-info-api-v2"]
+    _sandbox_scopes = ["openid", "profile", "role", "sandbox-account-info-api-v2-1"]
 
     def accounts(self, userId: str) -> dict:
         """
