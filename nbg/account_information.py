@@ -119,10 +119,10 @@ class AccountInformationPSD2Client(client.BaseClient):
         return self._api_request("POST", "scheduled-payments/list", data)
 
     def standing_orders(
-        self, account: str, date_from: datetime, date_to: datetime
+        self, user_id: str, account: str, date_from: datetime, date_to: datetime
     ) -> dict:
         """
         Retrieves standing orders list for a specified account. [Extensive documentation]
         """
-        data = {"account": account, "dateFrom": date_from, "dateTo": date_to}
+        data = {"userId": user_id, "account": account, "dateFrom": date_from, "dateTo": date_to}
         return self._api_request("POST", "standing-orders/list", data)
