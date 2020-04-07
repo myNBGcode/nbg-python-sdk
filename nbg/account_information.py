@@ -16,34 +16,39 @@ class AccountInformationPSD2Client(client.BaseClient):
     ]
     _sandbox_scopes = ["openid", "profile", "role", "sandbox-account-info-api-v2-1"]
 
-    def accounts(self, userId: str) -> dict:
+    def accounts(self, user_id: str) -> dict:
         """
         [Extensive documentation]
         """
-        data = {"userId": userId}
+        data = {"userId": user_id}
         return self._api_request("POST", "account/list", data)
 
-    def account_beneficiaries(self, iban: str) -> dict:
+    def account_beneficiaries(self, user_id: str, iban: str) -> dict:
         """
         [Extensive documentation]
         """
-        data = {"iban": iban}
+        data = {"userId": user_id, "iban": iban}
         return self._api_request("POST", "account/beneficiaries", data)
 
-    def account_details(self, account: str) -> dict:
+    def account_details(self, user_id: str, account: str) -> dict:
         """
         [Extensive documentation]
         """
-        data = {"account": account}
+        data = {"userId": user_id, "account": account}
         return self._api_request("POST", "account/details", data)
 
     def account_transactions(
-        self, account: str, date_from: datetime, date_to: datetime
+        self, user_id: str, account: str, date_from: datetime, date_to: datetime
     ) -> dict:
         """
         [Extensive documentation]
         """
-        data = {"account": account, "dateFrom": date_from, "dateTo": date_to}
+        data = {
+            "userId": user_id,
+            "account": account,
+            "dateFrom": date_from,
+            "dateTo": date_to,
+        }
         return self._api_request("POST", "account/transactions", data)
 
     def foreign_currency_accounts(self) -> dict:

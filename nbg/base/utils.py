@@ -2,11 +2,27 @@
 Generic utilities used by the base client of all NBG APIs.
 """
 
+from datetime import datetime
 import json
 
 from requests import Request, Response
 
 from . import exceptions
+
+
+def _serialize_datetime(datetime_instance: datetime) -> str:
+    iso_datetime = datetime_instance.isoformat(timespec="milliseconds")
+    return f"{iso_datetime}Z"
+
+
+def serialize_request_payload(data: dict) -> dict:
+    payload = data.copy()
+
+    for key, value in payload.items():
+        if isinstance(value, datetime):
+            payload[key] = _serialize_datetime(value)
+
+    return payload
 
 
 def validate_response(response: Response) -> dict:

@@ -34,9 +34,10 @@ class BaseClient(
         return headers
 
     def _prepare_request_body(self, request_id: str, method: str, data: dict) -> dict:
+        payload = utils.serialize_request_payload(data)
         body = {
             "header": {"ID": request_id, "application": self.client_id},
-            "payload": data,
+            "payload": payload,
         }
         return body
 
