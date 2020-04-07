@@ -86,7 +86,9 @@ class AccountInformationPSD2Client(client.BaseClient):
         data = {"userId": user_id}
         return self._api_request("POST", "foreign-currency-account/list", data)
 
-    def foreign_currency_account_beneficiaries(self, user_id: str, account: str) -> dict:
+    def foreign_currency_account_beneficiaries(
+        self, user_id: str, account: str
+    ) -> dict:
         """
         [Extensive documentation]
         """
@@ -106,7 +108,12 @@ class AccountInformationPSD2Client(client.BaseClient):
         """
         [Extensive documentation]
         """
-        data = {"userId": user_id, "account": account, "dateFrom": date_from, "dateTo": date_to}
+        data = {
+            "userId": user_id,
+            "account": account,
+            "dateFrom": date_from,
+            "dateTo": date_to,
+        }
         return self._api_request("POST", "foreign-currency-account/transactions", data)
 
     def scheduled_payments(
@@ -115,7 +122,12 @@ class AccountInformationPSD2Client(client.BaseClient):
         """
         Get scheduled payments. [Extensive documentation]
         """
-        data = {"userId": user_id, "account": account, "dateFrom": date_from, "dateTo": date_to}
+        data = {
+            "userId": user_id,
+            "account": account,
+            "dateFrom": date_from,
+            "dateTo": date_to,
+        }
         return self._api_request("POST", "scheduled-payments/list", data)
 
     def standing_orders(
@@ -124,5 +136,10 @@ class AccountInformationPSD2Client(client.BaseClient):
         """
         Retrieves standing orders list for a specified account. [Extensive documentation]
         """
-        data = {"userId": user_id, "account": account, "dateFrom": date_from, "dateTo": date_to}
+        data = {
+            "userId": user_id,
+            "account": account,
+            "dateFrom": date_from,
+            "dateTo": date_to,
+        }
         return self._api_request("POST", "standing-orders/list", data)
