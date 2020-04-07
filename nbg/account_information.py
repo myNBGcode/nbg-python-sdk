@@ -79,33 +79,34 @@ class AccountInformationPSD2Client(client.BaseClient):
         }
         return self._api_request("POST", "card/transactions", data)
 
-    def foreign_currency_accounts(self) -> dict:
+    def foreign_currency_accounts(self, user_id: str) -> dict:
         """
         [Extensive documentation]
         """
-        return self._api_request("POST", "foreign-currency-account/list")
+        data = {"userId": user_id}
+        return self._api_request("POST", "foreign-currency-account/list", data)
 
-    def foreign_currency_account_beneficiaries(self, account: str) -> dict:
+    def foreign_currency_account_beneficiaries(self, user_id: str, account: str) -> dict:
         """
         [Extensive documentation]
         """
-        data = {"account": account}
+        data = {"userId": user_id, "account": account}
         return self._api_request("POST", "foreign-currency-account/beneficiaries", data)
 
-    def foreign_currency_account_details(self, account: str) -> dict:
+    def foreign_currency_account_details(self, user_id: str, account: str) -> dict:
         """
         [Extensive documentation]
         """
-        data = {"account": account}
+        data = {"userId": user_id, "account": account}
         return self._api_request("POST", "foreign-currency-account/details", data)
 
     def foreign_currency_account_transactions(
-        self, account: str, date_from: datetime, date_to: datetime
+        self, user_id: str, account: str, date_from: datetime, date_to: datetime
     ) -> dict:
         """
         [Extensive documentation]
         """
-        data = {"account": account, "dateFrom": date_from, "dateTo": date_to}
+        data = {"userId": user_id, "account": account, "dateFrom": date_from, "dateTo": date_to}
         return self._api_request("POST", "foreign-currency-account/transactions", data)
 
     def scheduled_payments(
