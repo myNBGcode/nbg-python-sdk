@@ -51,6 +51,34 @@ class AccountInformationPSD2Client(client.BaseClient):
         }
         return self._api_request("POST", "account/transactions", data)
 
+    def cards(self, user_id: str) -> dict:
+        """
+        [Extensive documentation]
+        """
+        data = {"userId": user_id}
+        return self._api_request("POST", "card/list", data)
+
+    def card_details(self, user_id: str, card_number: str) -> dict:
+        """
+        [Extensive documentation]
+        """
+        data = {"userId": user_id, "cardNumber": card_number}
+        return self._api_request("POST", "card/details", data)
+
+    def card_transactions(
+        self, user_id: str, card_number: str, date_from: datetime, date_to: datetime
+    ) -> dict:
+        """
+        [Extensive documentation]
+        """
+        data = {
+            "userId": user_id,
+            "cardNumber": card_number,
+            "dateFrom": date_from,
+            "dateTo": date_to,
+        }
+        return self._api_request("POST", "card/transactions", data)
+
     def foreign_currency_accounts(self) -> dict:
         """
         [Extensive documentation]
@@ -97,31 +125,3 @@ class AccountInformationPSD2Client(client.BaseClient):
         """
         data = {"account": account, "dateFrom": date_from, "dateTo": date_to}
         return self._api_request("POST", "standing-orders/list", data)
-
-    def cards(self, user_id: str) -> dict:
-        """
-        [Extensive documentation]
-        """
-        data = {"userId": user_id}
-        return self._api_request("POST", "card/list", data)
-
-    def card_details(self, user_id: str, card_number: str) -> dict:
-        """
-        [Extensive documentation]
-        """
-        data = {"userId": user_id, "cardNumber": card_number}
-        return self._api_request("POST", "card/details", data)
-
-    def card_details(
-        self, user_id: str, card_number: str, date_from: datetime, date_to: datetime
-    ) -> dict:
-        """
-        [Extensive documentation]
-        """
-        data = {
-            "userId": user_id,
-            "cardNumber": card_number,
-            "dateFrom": date_from,
-            "dateTo": date_to,
-        }
-        return self._api_request("POST", "card/transactions", data)
