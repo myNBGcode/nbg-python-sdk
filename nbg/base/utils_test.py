@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 
 from requests import Response
@@ -14,6 +15,16 @@ def _get_dummy_response(body) -> Response:
     response.encoding = body_encoding
     response._content = body_bytes
     return response
+
+
+def test_serialize_request_payload():
+    datetime_to_serialize = datetime(1906, 12, 9)
+    serialized_datetime = "1906-12-09T00:00:00.000Z"
+    payload = {"dateFrom": datetime_to_serialize}
+    desired_serialized_payload = {"dateFrom": "1906-12-09T00:00:00.000Z"}
+    serialized_payload = utils.serialize_request_payload(payload)
+
+    assert serialized_payload == desired_serialized_payload
 
 
 def test_validate_response_with_valid_response():

@@ -16,6 +16,11 @@ def _serialize_datetime(datetime_instance: datetime) -> str:
 
 
 def serialize_request_payload(data: dict) -> dict:
+    """
+    Serializes the request payload to match the format requested by
+    NBG APIs. Serializations:
+      - datetime: (Z-suffixed ISO format)
+    """
     payload = data.copy()
 
     for key, value in payload.items():
