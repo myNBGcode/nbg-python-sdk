@@ -16,20 +16,20 @@ class ConsentClient(oauth.OAuthClientMixin, signature.SignedClientMixin):
         """
         Return the consent ID of the current client.
         """
-        return self._consent_id
+        return getattr(self, "_consent_id", None)
 
     @property
     def consent_headers(self) -> dict:
         """
         Return the required headers for authorising a request with a consent.
         """
-        check_consent = self.production
+        check_consent = self.consent_id is not None
+
         x_consent_check = "true" if check_consent else "false"
-        consent_id = getattr(self, "_consent_id")
         headers = {"X-Consent-Check": x_consent_check}
 
-        if check_consent and consent_id:
-            headers["Consent-Id"] = consent_id
+        if check_consent:
+            headers["Consent-Id"] = self.consent_id
 
         return headers
 
