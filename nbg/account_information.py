@@ -22,6 +22,14 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         :param user_id: The user ID of the corresponding user.
         :type user_id: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.accounts(user_id="your_user_id")
         """
         data = {"userId": user_id}
         return self._api_request("POST", "account/list", data)
@@ -34,6 +42,17 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type user_id: string
         :param iban: The IBAN of the domestic account.
         :type iban: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.account_beneficiaries(
+          >>>     user_id="your_user_id",
+          >>>     iban="GR7701100800000008000123456",
+          >>> )
         """
         data = {"userId": user_id, "iban": iban}
         return self._api_request("POST", "account/beneficiaries", data)
@@ -46,6 +65,17 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type user_id: string
         :param account: The number of the domestic account.
         :type account: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.account_details(
+          >>>     user_id="your_user_id",
+          >>>     account="8000123456",
+          >>> )
         """
         data = {"userId": user_id, "account": account}
         return self._api_request("POST", "account/details", data)
@@ -64,6 +94,20 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type date_from: datetime
         :param date_to: The datetime after which to look for transactions.
         :type date_to: datetime
+
+        ---
+        **Usage**
+          >>> from datetime import datetime
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.account_transactions(
+          >>>     user_id="your_user_id",
+          >>>     account="8000123456",
+          >>>     date_from=datetime(2020, 1, 1),
+          >>>     date_to=datetime(2020, 12, 31),
+          >>> )
         """
         data = {
             "userId": user_id,
@@ -79,6 +123,16 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         :param user_id: The user ID of the corresponding user.
         :type user_id: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.cards(
+          >>>     user_id="your_user_id",
+          >>> )
         """
         data = {"userId": user_id}
         return self._api_request("POST", "card/list", data)
@@ -91,6 +145,17 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type user_id: string
         :param card_number: The number of the card.
         :type card_number: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.card_details(
+          >>>     user_id="your_user_id",
+          >>>     card_number="4111111111111111",
+          >>> )
         """
         data = {"userId": user_id, "cardNumber": card_number}
         return self._api_request("POST", "card/details", data)
@@ -109,6 +174,19 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type date_from: datetime
         :param date_to: The datetime after which to look for transactions.
         :type date_to: datetime
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.card_transactions(
+          >>>     user_id="your_user_id",
+          >>>     card_number="4111111111111111",
+          >>>     date_from=datetime(2020, 1, 1),
+          >>>     date_to=datetime(2020, 12, 31),
+          >>> )
         """
         data = {
             "userId": user_id,
@@ -124,6 +202,14 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         :param user_id: The user ID of the corresponding user.
         :type user_id: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.foreign_currency_accounts(user_id="your_user_id")
         """
         data = {"userId": user_id}
         return self._api_request("POST", "foreign-currency-account/list", data)
@@ -138,6 +224,17 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type user_id: string
         :param account: The number of the foreign currency account.
         :type account: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.foreign_currency_account_beneficiaries(
+          >>>     user_id="your_user_id",
+          >>>     account="8000123456",
+          >>> )
         """
         data = {"userId": user_id, "account": account}
         return self._api_request("POST", "foreign-currency-account/beneficiaries", data)
@@ -150,6 +247,17 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type user_id: string
         :param account: The number of the foreign currency account.
         :type account: string
+
+        ---
+        **Usage**
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.foreign_currency_account_details(
+          >>>     user_id="your_user_id",
+          >>>     account="8000123456",
+          >>> )
         """
         data = {"userId": user_id, "account": account}
         return self._api_request("POST", "foreign-currency-account/details", data)
@@ -168,6 +276,20 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type date_from: datetime
         :param date_to: The datetime after which to look for transactions.
         :type date_to: datetime
+
+        ---
+        **Usage**
+          >>> from datetime import datetime
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.foreign_currency_account_details(
+          >>>     user_id="your_user_id",
+          >>>     account="8000123456",
+          >>>     date_from=datetime(2020, 1, 1),
+          >>>     date_to=datetime(2020, 12, 31),
+          >>> )
         """
         data = {
             "userId": user_id,
@@ -191,6 +313,20 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type date_from: datetime
         :param date_to: The datetime until which to look for scheduled payments.
         :type date_to: datetime
+
+        ---
+        **Usage**
+          >>> from datetime import datetime
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.scheduled_payments(
+          >>>     user_id="your_user_id",
+          >>>     account="8000123456",
+          >>>     date_from=datetime(2020, 1, 1),
+          >>>     date_to=datetime(2020, 12, 31),
+          >>> )
         """
         data = {
             "userId": user_id,
@@ -214,6 +350,20 @@ class AccountInformationPSD2Client(client.BaseClient):
         :type date_from: datetime
         :param date_to: The datetime until which to look for standing orders.
         :type date_to: datetime
+
+        ---
+        **Usage**
+          >>> from datetime import datetime
+          >>> from nbg.account_information import AccountInformationPSD2Client
+          >>> client = AccountInformationPSD2Client(
+          >>>     client_id=client_id, client_secret=client_secret
+          >>> )
+          >>> client.standing_orders(
+          >>>     user_id="your_user_id",
+          >>>     account="8000123456",
+          >>>     date_from=datetime(2020, 1, 1),
+          >>>     date_to=datetime(2020, 12, 31),
+          >>> )
         """
         data = {
             "userId": user_id,
