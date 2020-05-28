@@ -4,6 +4,30 @@ from .base import client, decorators
 
 
 class AccountInformationPSD2Client(client.BaseClient):
+    """
+    The AccountInformationPSD2Client is the Python interface for
+    NBG's Account Information API.
+
+    :param client_id: The Client ID you received for your NBG application.
+    :type client_id: string
+    :param client_secret: The Client Secret you received for your NBG application.
+    :type client_secret: string
+    :param production: Whether the client should run in production mode (`True`)
+                       or sandbox mode (`False`). Defaults to `False`.
+    :type production: bool
+
+    ---
+    **Usage**
+
+        .. code-block:: python
+
+            from nbg.account_information import AccountInformationPSD2Client
+            client = AccountInformationPSD2Client(
+                client_id="your_app_client_id",
+                client_secret="your_app_client_secret",
+            )
+    """
+
     _production_base_url = "https://services.nbg.gr/apis/account.info/v2.1"
     _sandbox_base_url = "https://apis.nbg.gr/sandbox/account.info/oauth2/v2.1"
 
@@ -25,11 +49,11 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.accounts(user_id="your_user_id")
+
+        .. code-block:: python
+
+            client.accounts(user_id="your_user_id")
+
         """
         data = {"userId": user_id}
         return self._api_request("POST", "account/list", data)
@@ -45,14 +69,13 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.account_beneficiaries(
-          >>>     user_id="your_user_id",
-          >>>     iban="GR7701100800000008000123456",
-          >>> )
+
+        .. code-block:: python
+
+            client.account_beneficiaries(
+                user_id="your_user_id",
+                iban="GR7701100800000008000123456",
+            )
         """
         data = {"userId": user_id, "iban": iban}
         return self._api_request("POST", "account/beneficiaries", data)
@@ -68,14 +91,13 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.account_details(
-          >>>     user_id="your_user_id",
-          >>>     account="8000123456",
-          >>> )
+
+        .. code-block:: python
+
+            client.account_details(
+                user_id="your_user_id",
+                account="8000123456",
+            )
         """
         data = {"userId": user_id, "account": account}
         return self._api_request("POST", "account/details", data)
@@ -97,17 +119,16 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from datetime import datetime
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.account_transactions(
-          >>>     user_id="your_user_id",
-          >>>     account="8000123456",
-          >>>     date_from=datetime(2020, 1, 1),
-          >>>     date_to=datetime(2020, 12, 31),
-          >>> )
+
+        .. code-block:: python
+
+            from datetime import datetime
+            client.account_transactions(
+                user_id="your_user_id",
+                account="8000123456",
+                date_from=datetime(2020, 1, 1),
+                date_to=datetime(2020, 12, 31),
+            )
         """
         data = {
             "userId": user_id,
@@ -126,13 +147,12 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.cards(
-          >>>     user_id="your_user_id",
-          >>> )
+
+        .. code-block:: python
+
+            client.cards(
+                user_id="your_user_id",
+            )
         """
         data = {"userId": user_id}
         return self._api_request("POST", "card/list", data)
@@ -148,14 +168,13 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.card_details(
-          >>>     user_id="your_user_id",
-          >>>     card_number="4111111111111111",
-          >>> )
+
+        .. code-block:: python
+
+            client.card_details(
+                user_id="your_user_id",
+                card_number="4111111111111111",
+            )
         """
         data = {"userId": user_id, "cardNumber": card_number}
         return self._api_request("POST", "card/details", data)
@@ -177,16 +196,15 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.card_transactions(
-          >>>     user_id="your_user_id",
-          >>>     card_number="4111111111111111",
-          >>>     date_from=datetime(2020, 1, 1),
-          >>>     date_to=datetime(2020, 12, 31),
-          >>> )
+
+        .. code-block:: python
+
+            client.card_transactions(
+                user_id="your_user_id",
+                card_number="4111111111111111",
+                date_from=datetime(2020, 1, 1),
+                date_to=datetime(2020, 12, 31),
+            )
         """
         data = {
             "userId": user_id,
@@ -205,11 +223,10 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.foreign_currency_accounts(user_id="your_user_id")
+
+        .. code-block:: python
+
+            client.foreign_currency_accounts(user_id="your_user_id")
         """
         data = {"userId": user_id}
         return self._api_request("POST", "foreign-currency-account/list", data)
@@ -227,14 +244,13 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.foreign_currency_account_beneficiaries(
-          >>>     user_id="your_user_id",
-          >>>     account="8000123456",
-          >>> )
+
+        .. code-block:: python
+
+            client.foreign_currency_account_beneficiaries(
+                user_id="your_user_id",
+                account="8000123456",
+            )
         """
         data = {"userId": user_id, "account": account}
         return self._api_request("POST", "foreign-currency-account/beneficiaries", data)
@@ -250,14 +266,13 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.foreign_currency_account_details(
-          >>>     user_id="your_user_id",
-          >>>     account="8000123456",
-          >>> )
+
+        .. code-block:: python
+
+            client.foreign_currency_account_details(
+                user_id="your_user_id",
+                account="8000123456",
+            )
         """
         data = {"userId": user_id, "account": account}
         return self._api_request("POST", "foreign-currency-account/details", data)
@@ -279,17 +294,16 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from datetime import datetime
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.foreign_currency_account_details(
-          >>>     user_id="your_user_id",
-          >>>     account="8000123456",
-          >>>     date_from=datetime(2020, 1, 1),
-          >>>     date_to=datetime(2020, 12, 31),
-          >>> )
+
+        .. code-block:: python
+
+            from datetime import datetime
+            client.foreign_currency_account_details(
+                user_id="your_user_id",
+                account="8000123456",
+                date_from=datetime(2020, 1, 1),
+                date_to=datetime(2020, 12, 31),
+            )
         """
         data = {
             "userId": user_id,
@@ -316,17 +330,16 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from datetime import datetime
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.scheduled_payments(
-          >>>     user_id="your_user_id",
-          >>>     account="8000123456",
-          >>>     date_from=datetime(2020, 1, 1),
-          >>>     date_to=datetime(2020, 12, 31),
-          >>> )
+
+        .. code-block:: python
+
+            from datetime import datetime
+            client.scheduled_payments(
+                user_id="your_user_id",
+                account="8000123456",
+                date_from=datetime(2020, 1, 1),
+                date_to=datetime(2020, 12, 31),
+            )
         """
         data = {
             "userId": user_id,
@@ -353,17 +366,16 @@ class AccountInformationPSD2Client(client.BaseClient):
 
         ---
         **Usage**
-          >>> from datetime import datetime
-          >>> from nbg.account_information import AccountInformationPSD2Client
-          >>> client = AccountInformationPSD2Client(
-          >>>     client_id=client_id, client_secret=client_secret
-          >>> )
-          >>> client.standing_orders(
-          >>>     user_id="your_user_id",
-          >>>     account="8000123456",
-          >>>     date_from=datetime(2020, 1, 1),
-          >>>     date_to=datetime(2020, 12, 31),
-          >>> )
+
+        .. code-block:: python
+
+          from datetime import datetime
+          client.standing_orders(
+              user_id="your_user_id",
+              account="8000123456",
+              date_from=datetime(2020, 1, 1),
+              date_to=datetime(2020, 12, 31),
+          )
         """
         data = {
             "userId": user_id,
