@@ -69,6 +69,25 @@ class OAuthClientMixin:
         """
         Composes and returns the URL that has to be visited by a user to
         get an authorization code for the current client.
+
+        :param redirect_uri: The redirect URI to return the authorization code
+                             as GET parameter.
+        :type redirect_uri: string
+        :param scope: The OAuth scope for which to get authorization code.
+                      Defaults to `None`; this is each client's built-in configuration,
+                      which should suffice in most cases.
+        :type scope: string
+        :param response_type: The response type when exchanging the authorization code.
+                              Defaults to `token`, which should suffice in most cases.
+        :type response_type: string
+
+        **Usage**
+
+        .. code-block:: python
+
+            client.get_authorization_code_url(
+                redirect_uri="https://myapp.example.com/complete/nbg/",
+            )
         """
         _scope = scope or " ".join(self.scopes)
         params = {
@@ -86,6 +105,15 @@ class OAuthClientMixin:
     def set_access_token(self, access_token: str):
         """
         Sets the access token for the current client.
+
+        :param access_token: The access token to set up for the current client.
+        :type access_token: string
+
+        **Usage**
+
+        .. code-block:: python
+
+            client.set_access_token("the_access_token_of_a_user")
         """
         self._access_token = access_token
         return access_token
@@ -96,6 +124,22 @@ class OAuthClientMixin:
         """
         Exchanges an authorization code with an access token and sets the
         access token accordingly for the current client.
+
+        :param authorization_code: The authorization code you received
+                                   as a GET parameter.
+        :type authorization_code: string
+        :param redirect_uri: The redirect URI for which you requested the
+                             authorization code.
+        :type redirect_uri: string
+
+        **Usage**
+
+        .. code-block:: python
+
+            client.set_access_token_from_authorization_code(
+                authorization_code="the_authorization_code_you_received",
+                redirect_uri="https://myapp.example.com/complete/nbg/",
+            )
         """
         try:
             access_token_response = self._exchange_authorization_code(

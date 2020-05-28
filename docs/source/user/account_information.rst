@@ -18,12 +18,19 @@ Before you get started you need to:
 
 Authentication
 --------------
-...
 
-From sandbox to production
---------------------------
+The Account Information API utilizes OAuth2 for authentication and authorization. The OAuth2 authentication flow
+can be described in a few steps:
 
-...
+1. You prompt your user to visit an authorization code url via `get_authorization_code_url`
+2. After the user authenticates with their NBG account, they will be redirected to the `redirect_url` you provided
+3. Your application should grab the `authorization_code` from the GET parameters of the `redirect_url`
+4. Your application should exchange the `authorization_code` for an `access_token` via `set_access_token_from_authorization_code`
+
+.. automethod:: nbg.account_information.AccountInformationPSD2Client.get_authorization_code_url
+.. automethod:: nbg.account_information.AccountInformationPSD2Client.set_access_token_from_authorization_code
+.. automethod:: nbg.account_information.AccountInformationPSD2Client.set_access_token
+
 
 `AccountInformationPSD2Client`
 ------------------------------
