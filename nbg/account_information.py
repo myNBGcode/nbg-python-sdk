@@ -10,10 +10,12 @@ class AccountInformationPSD2Client(client.BaseClient):
 
     :param client_id: The Client ID you received for your NBG application.
     :type client_id: string
-    :param client_secret: The Client Secret you received for your NBG application.
+    :param client_secret: The Client Secret you received for your
+                          NBG application.
     :type client_secret: string
-    :param production: Whether the client should run in production mode (`True`)
-                       or sandbox mode (`False`). Defaults to `False`.
+    :param production: Whether the client should run in
+                       production mode (``True``) or sandbox mode (``False``).
+                       Defaults to ``False``.
     :type production: bool
 
     ---

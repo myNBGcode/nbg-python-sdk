@@ -1,2 +1,1 @@
-web: bin/build-docs.sh && cd docs/build/html && python -m http.server ${PORT:-8000}
-build_docs: watchmedo shell-command --patterns="*.rst;*.py" --recursive --command='bin/build-docs.sh' docs/ nbg/
+web: ./bin/build_docs.sh && ./bin/serve_docs.py

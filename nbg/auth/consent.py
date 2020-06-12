@@ -33,6 +33,13 @@ class ConsentClient(oauth.OAuthClientMixin, signature.SignedClientMixin):
 
         return headers
 
+    def get_user_consent_url(self, redirect_url: str) -> str:
+        """
+        Get a URL to present to the user to provide their consent.
+        """
+        # ...
+        return f"..."
+
     def set_consent_id(self, consent_id: str):
         """
         Set the consent ID for the current client.
