@@ -9,7 +9,7 @@ from requests import Response
 
 class InvalidResponse(Exception):
     """
-    This exception is being raised when an invalid response was received by
+    This exception gets raised when an invalid response was received by
     the server.
     """
 
@@ -23,7 +23,7 @@ class InvalidResponse(Exception):
 
 class GenericResponseError(Exception):
     """
-    This exception is being raised when the JSON response received by the
+    This exception gets raised when the JSON response received by the
     server indicates that a generic error has taken place.
     """
 
@@ -61,7 +61,7 @@ class GenericResponseError(Exception):
 
 class ResponseException(Exception):
     """
-    This exception is being raised when the JSON response received by the
+    This exception gets raised when the JSON response received by the
     server indicates that an exception has been raised.
     """
 
@@ -82,7 +82,7 @@ class ResponseException(Exception):
 
 class MissingResourceArguments(Exception):
     """
-    This exception is being raised when the JSON object does not contain all
+    This exception gets raised when the JSON object does not contain all
     required fields, as defined in the corresponding resource.
     """
 
@@ -97,4 +97,27 @@ class MissingResourceArguments(Exception):
                 for argument_name, argument_type in self.missing_arguments
             ]
         )
-        return f"{self.resource_class} cannot be created, as the following payload arguments were not provided: {missing_arguments_str}."
+        exception_message = (
+            f"{self.resource_class} cannot be created, "
+            f"as the following payload arguments were not provided: "
+            f"{missing_arguments_str}."
+        )
+        return exception_message
+
+
+class NotAuthenticatedRequest(Exception):
+    """
+    This exception gets raised when a request is not authenticated. A common
+    reason for this is a wrong or expired access token.
+    """
+
+    def __init__(self, response: Response):
+        self.response = response
+
+    def __str__(self):
+        exception_message = (
+            "This request is not authenticated. Check that your access token "
+            "is valid and not expired. For more information check the "
+            "documentation at https://developer.nbg.gr."
+        )
+        return f"[{self.response.status_code}] Not authenticated."

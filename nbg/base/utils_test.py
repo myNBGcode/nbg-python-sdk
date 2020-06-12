@@ -7,11 +7,12 @@ import pytest
 from . import exceptions, utils
 
 
-def _get_dummy_response(body) -> Response:
+def _get_dummy_response(body, status_code=200) -> Response:
     body_encoding = "utf-8"
     body_string = body if isinstance(body, str) else json.dumps(body)
     body_bytes = bytes(body_string, body_encoding)
     response = Response()
+    response.status_code = status_code
     response.encoding = body_encoding
     response._content = body_bytes
     return response
@@ -33,6 +34,16 @@ def test_validate_response_with_valid_response():
     validated_response = utils.validate_response(valid_response)
 
     assert validated_response == response_body
+
+
+def test_validate_response_with_401_status_code():
+    response_body = ""
+    invalid_response = _get_dummy_response(response_body, status_code=401)
+
+    with pytest.raises(exceptions.NotAuthenticatedRequest) as exception_info:
+        utils.validate_response(invalid_response)
+
+    assert exception_info.value.response == invalid_response
 
 
 def test_validate_response_with_missing_keys():

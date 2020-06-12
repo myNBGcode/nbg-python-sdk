@@ -35,6 +35,9 @@ def validate_response(response: Response) -> dict:
     Validates that the given response is valid JSON and it contains all required
     fields.
     """
+    if response.status_code == 401:
+        raise exceptions.NotAuthenticatedRequest(response)
+
     try:
         data = response.json()
     except json.JSONDecodeError:
