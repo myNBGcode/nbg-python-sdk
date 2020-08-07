@@ -42,6 +42,9 @@ class AccountInformationPSD2Client(client.BaseClient):
     ]
     _sandbox_scopes = ["openid", "profile", "role", "sandbox-account-info-api-v2-1"]
 
+    _production_consent_base_url = "https://my.nbg.gr/psd2.consent.v2.1/account.info/authorize"
+    _sandbox_consent_base_url = "https://my.nbg.gr/sandbox.psd2.consent.v2.1/account.info/authorize"
+
     def accounts(self, user_id: str) -> dict:
         """
         List domestic accounts in Εuro for the given user.

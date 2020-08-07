@@ -29,6 +29,9 @@ class EnvironmentClientMixin:
     _production_scopes = []
     _sandbox_scopes = []
 
+    _production_consent_base_url = ""
+    _sandbox_consent_base_url = ""
+
     production: bool = False
 
     @property
@@ -41,6 +44,24 @@ class EnvironmentClientMixin:
             self._production_base_url if self.production else self._sandbox_base_url
         )
         return _base_url
+
+    @property
+    def consent_base_url(self):
+        """
+        Returns the consent base URL of the current client according to the configured
+        environment.
+        """
+        _base_url = (
+            self._production_consent_base_url
+            if self.production
+            else self._sandbox_consent_base_url
+        )
+        query = f"consent_id={self.consent_id}"
+
+        if not self.production:
+            query = f"{query}&sandbox_id={self._sandbox_id}"
+
+        return f"{_base_url}?{query}"
 
     @property
     def scopes(self):
