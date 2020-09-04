@@ -5,15 +5,7 @@ environments.
 
 import typing
 
-from . import decorators, resources
-
-
-class Sandbox(resources.BaseResource):
-    sanboxId: str
-    version: int
-    users: typing.List[dict]  # TODO: implement `User`
-    consentApplicationIds: typing.List[dict]  # TODO: implement `ApplicationId`
-    consents: typing.List[dict]  # TODO: implement `SandboxConsentModel`
+from . import decorators
 
 
 class EnvironmentClientMixin:
