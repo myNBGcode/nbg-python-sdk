@@ -24,3 +24,5 @@ jobs:
       with:
         name: docs-html
         path: docs/build/html
+    - name: Upload to ReadTheDocs
+      run: curl -X POST -d "branches=${{ github.ref }}" -d "token=${{ secrets.READ_THE_DOCS_INTEGRATION_TOKEN }}" readthedocs.org/api/v2/webhook/nbg-python-sdk/132123/
