@@ -16,11 +16,6 @@ Environment
 .. automodule:: nbg.base.environment
     :members:
 
-Resources
------------------
-.. automodule:: nbg.base.resources
-    :members:
-
 Utils
 -----------------
 .. automodule:: nbg.base.utils

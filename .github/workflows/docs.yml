@@ -1,0 +1,26 @@
+name: Automated docs building
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip==20.0.1 poetry==1.0.2
+        poetry config virtualenvs.create false
+        poetry install
+    - name: Build documentation
+      run: ./bin/build_docs.sh
+    - uses: actions/upload-artifact@v2
+      with:
+        name: docs-html
+        path: docs/build/html
