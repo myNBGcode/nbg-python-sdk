@@ -1,6 +1,6 @@
 # NBG Python SDK
 
-[![Downloads of nbg on PyPI](https://pepy.tech/badge/nbg)](https://pepy.tech/project/nbg) [![nbg is packaged as wheel](https://img.shields.io/pypi/wheel/nbg.svg)](https://pypi.org/project/nbg/) [![Supported Python versions of nbg](https://img.shields.io/pypi/pyversions/nbg.svg)](https://pypi.org/project/nbg/)
+[![Downloads of nbg on PyPI](https://pepy.tech/badge/nbg)](https://pepy.tech/project/nbg) [![nbg is packaged as wheel](https://img.shields.io/pypi/wheel/nbg.svg)](https://pypi.org/project/nbg/) [![Supported Python versions of nbg](https://img.shields.io/pypi/pyversions/nbg.svg)](https://pypi.org/project/nbg/) [![Documentation Status](https://readthedocs.org/projects/nbg-python-sdk/badge/?version=latest)](https://nbg-python-sdk.readthedocs.io/en/latest/?badge=latest)
 
 The [`nbg` Python package](https://pypi.org/project/nbg) enables developers to build applications that use the public APIs of the National Bank of Greece.
 
@@ -24,6 +24,10 @@ In case you cannot use Poetry or Pipenv, you can always install `nbg` with [pip]
 ```console
 pip install nbg
 ```
+
+## Documentation
+
+The full documentation for the NBG Python SDK is hosted at Read the Docs: https://readthedocs.org/projects/nbg-python-sdk.
 
 ## API clients
 
