@@ -1,6 +1,10 @@
 name: Automated testing
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - $default-branch
+  pull_request:
 
 jobs:
   build:
