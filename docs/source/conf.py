@@ -25,7 +25,7 @@ copyright = '2020, National Bank of Greece SA'
 author = 'National Bank of Greece SA'
 
 # The full version, including alpha/beta/rc tags
-release = '0.7.0'
+release = '0.7.1'
 
 
 # -- General configuration ---------------------------------------------------
