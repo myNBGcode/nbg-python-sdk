@@ -21,11 +21,11 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'NBG Python SDK'
-copyright = '2020, NBG'
-author = 'NBG'
+copyright = '2020, National Bank of Greece SA'
+author = 'National Bank of Greece SA'
 
 # The full version, including alpha/beta/rc tags
-release = '0.6.0'
+release = '0.7.0'
 
 
 # -- General configuration ---------------------------------------------------
