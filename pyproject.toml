@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "nbg"
-version = "0.6.0"
+version = "0.670"
 description = "Official Python SDK for NBG APIs"
-authors = ["Paris Kasidiaris <paris@sourcelair.com>"]
+authors = ["National Bank of Greece"]
 readme = "README.md"
 documentation = "https://nbg-python-sdk.readthedocs.io"
 repository = "https://github.com/myNBGcode/nbg-python-sdk"
