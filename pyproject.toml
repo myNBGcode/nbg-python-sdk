@@ -4,6 +4,8 @@ version = "0.6.0"
 description = "Official Python SDK for NBG APIs"
 authors = ["Paris Kasidiaris <paris@sourcelair.com>"]
 readme = "README.md"
+documentation = "https://nbg-python-sdk.readthedocs.io"
+repository = "https://github.com/myNBGcode/nbg-python-sdk"
 
 [tool.poetry.dependencies]
 python = "^3.6"
