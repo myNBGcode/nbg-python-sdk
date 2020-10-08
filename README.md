@@ -2,7 +2,7 @@
 
 [![Downloads of nbg on PyPI](https://pepy.tech/badge/nbg)](https://pepy.tech/project/nbg) [![nbg is packaged as wheel](https://img.shields.io/pypi/wheel/nbg.svg)](https://pypi.org/project/nbg/) [![Supported Python versions of nbg](https://img.shields.io/pypi/pyversions/nbg.svg)](https://pypi.org/project/nbg/)
 
-The `nbg <https://pypi.org/project/nbg>`_ Python package enables developers to build applications that use the public APIs of the National Bank of Greece.
+The [`nbg` Python package](https://pypi.org/project/nbg) enables developers to build applications that use the public APIs of the National Bank of Greece.
 
 
 ## Installation
@@ -51,8 +51,6 @@ client.create_sandbox(sandbox_id)
 client.set_sandbox(sandbox_id)
 
 # Step 3 - Start working with the Account information API
-
-## Account resource
 accounts = client.accounts(user_id="your_user_id")
 print(accounts)
 ```
